@@ -52,7 +52,7 @@ ingress:
    - secretName: ysa5347-httpstls.nginx-ingress
      hosts:
        - code.ysa5347.com
-password: []
+password: "abcde"
 # Optional additional arguments
 extraArgs: []
   # These are the arguments normally passed to code-server; run

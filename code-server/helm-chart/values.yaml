@@ -50,10 +50,10 @@ ingress:
      paths:
        - /
   ingressClassName: "nginx"
-  tls:
-   - secretName: ysa5347-httpstls.nginx-ingress
-     hosts:
-       - code.ysa5347.com
+  # tls:
+  #  - secretName: ysa5347-httpstls
+  #    hosts:
+  #      - code.ysa5347.com
 
 # Optional additional arguments
 extraArgs: []

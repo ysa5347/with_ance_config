@@ -82,9 +82,9 @@ extraVars: []
 ## volumePermissions: Change the owner of the persist volume mountpoint to RunAsUser:fsGroup
 ##
 volumePermissions:
-  enabled: true
-  securityContext:
-    runAsUser: 0
+  enabled: false
+  # securityContext:
+  # runAsUser: 0
 
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -122,12 +122,12 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "local-storage"
+  storageClass: "-"
   accessMode: ReadWriteOnce
   size: 10Gi
   annotations: {}
   # existingClaim: ""
-  # hostPath: /Users/yoon.jh/Desktop/
+  hostPath: /Users/yoon.jh/Desktop/2023 Army project/
 
 lifecycle:
   enabled: false

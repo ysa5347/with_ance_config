@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: nginx-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - '*.ysa5347.com'
+    - ysa5347.com
+    - argo.ysa5347.com
+    - api.ysa5347.com
+    - www.ysa5347.com
+    secretName: ysa5347-httpstls
+  rules:
+  - host: argo.ysa5347.com
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+            service:
+              name: argocd
+              port: 
+                number: 80
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.111.194.44

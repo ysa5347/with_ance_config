@@ -253,7 +253,7 @@ controller:
 
   logging:
     # -- Set the logging level (one of: `debug`, `info`, `warn`, `error`)
-    level: info
+    level: error
     # -- Set the glog logging level
     globallevel: "0"
     # -- Set the logging format (one of: `text`, `json`)

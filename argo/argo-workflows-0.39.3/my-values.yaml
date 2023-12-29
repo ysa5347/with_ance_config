@@ -672,7 +672,7 @@ server:
     redirectUrl: https://argo-workflow.ysa5347.com/oauth2/callback
     rbac:
       # -- Adds ServiceAccount Policy to server (Cluster)Role.
-      enabled: true
+      enabled: false
     # -- Whitelist to allow server to fetch Secrets
     ## When present, restricts secrets the server can read to a given list.
     ## You can use it to restrict the server to only be able to access the

@@ -1769,7 +1769,7 @@ server:
     enabled: false
     # -- The name of the Secret that will be automatically created and managed by this Certificate resource
     secretName: ysa5347-httpstls
-    # -- Certificate primary domain (commonName)
+    # -- Se primary domain (commonName)
     domain: argo.ysa5347.com
     # -- Certificate Subject Alternate Names (SANs)
     additionalHosts: []

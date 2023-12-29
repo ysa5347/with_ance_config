@@ -1,0 +1,28 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"labels":{"app.kubernetes.io/component":"server","app.kubernetes.io/instance":"argo-workflow","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"argo-workflows-server","app.kubernetes.io/part-of":"argo-workflows","argocd.argoproj.io/instance":"argo-workflow","helm.sh/chart":"argo-workflows-0.39.3"},"name":"argo-workflow-argo-workflows-server"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"argo-workflow-argo-workflows-server"},"subjects":[{"kind":"ServiceAccount","name":"argo-workflow-argo-workflows-server","namespace":"argo"}]}
+    meta.helm.sh/release-name: argo-workflow
+    meta.helm.sh/release-namespace: argo
+  creationTimestamp: '2023-12-28T14:20:20Z'
+  labels:
+    app.kubernetes.io/component: server
+    app.kubernetes.io/instance: argo-workflow
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: argo-workflows-server
+    app.kubernetes.io/part-of: argo-workflows
+    argocd.argoproj.io/instance: argo-workflow
+    helm.sh/chart: argo-workflows-0.39.3
+  name: argo-workflow-argo-workflows-server
+  resourceVersion: '4950990'
+  uid: 35866a69-61a1-4f51-b23a-8ac646dc9e16
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argo-workflow-argo-workflows-server
+subjects:
+  - kind: ServiceAccount
+    name: argo-workflow-argo-workflows-server
+    namespace: argo

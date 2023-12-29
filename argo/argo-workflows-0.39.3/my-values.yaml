@@ -334,7 +334,7 @@ controller:
   navColor: ""
   clusterWorkflowTemplates:
     # -- Create a ClusterRole and CRB for the controller to access ClusterWorkflowTemplates.
-    enabled: true
+    enabled: false
   # -- Extra containers to be added to the controller deployment
   extraContainers: []
 

@@ -655,7 +655,7 @@ server:
   # SSO configuration when SSO  is specified as aserver auth mode.
   sso:
     # -- Create SSO configuration. If you set `true` , please also set `.Values.server.authMode` as `sso`.
-    enabled: false
+    enabled: true
     # -- The root URL of the OIDC identity provider
     issuer: https://accounts.google.com
     clientId:
@@ -694,7 +694,7 @@ server:
     ## Configure this if your OIDC provider provides groups information only using the user-info endpoint (e.g. Okta)
     userInfoPath: ""
     # -- Skip TLS verification for the HTTP client
-    insecureSkipVerify: false
+    insecureSkipVerify: true
 
   # -- Extra containers to be added to the server deployment
   extraContainers: []

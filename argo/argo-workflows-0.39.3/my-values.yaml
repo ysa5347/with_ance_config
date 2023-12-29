@@ -667,7 +667,7 @@ server:
       # -- Name of a secret to retrieve the app OIDC client secret
       name: oauth-secret
       # -- Key of a secret to retrieve the app OIDC client secret
-      key: client-secre-key
+      key: client-secret-key
     # - The OIDC redirect URL. Should be in the form <argo-root-url>/oauth2/callback.
     redirectUrl: https://argo-workflow.ysa5347.com/oauth2/callback
     rbac:

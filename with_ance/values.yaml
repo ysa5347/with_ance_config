@@ -8,7 +8,7 @@ image:
   repository: 456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "PUSH-f04b38df222a50c7a485ba74c4e289f24f57911"
+  tag: ""
 
 imagePullSecrets: 
   - name: ecr-secrets

@@ -19,9 +19,9 @@ metadata:
   resourceVersion: '4950990'
   uid: 35866a69-61a1-4f51-b23a-8ac646dc9e16
 roleRef:
-  - apiGroup: rbac.authorization.k8s.io
-    kind: ClusterRole
-    name: argo-workflow-argo-workflows-admin
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: argo-workflow-argo-workflows-admin
 subjects:
   - kind: ServiceAccount
     name: argo-workflow-argo-workflows-admin

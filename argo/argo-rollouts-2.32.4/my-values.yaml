@@ -380,11 +380,11 @@ dashboard:
     ## Hostnames must be provided if Ingress is enabled.
     ## Secrets must be manually created in the namespace
     hosts:
-      - argo.ysa5347.com
+      - argo-rollouts.ysa5347.com
 
     # -- Dashboard ingress paths
     paths:
-      - /argo-rollout/
+      - /
     # -- Dashboard ingress path type
     pathType: Prefix
     # -- Dashboard ingress extra paths

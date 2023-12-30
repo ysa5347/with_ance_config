@@ -1,7 +1,7 @@
 # -- Install and upgrade CRDs
 installCRDs: true
 # -- Keep CRD's on helm uninstall
-keepCRDs: true
+keepCRDs: false
 
 # -- `false` runs controller in namespaced mode (does not require cluster RBAC)
 clusterInstall: true
@@ -335,9 +335,9 @@ dashboard:
     # -- Service port name
     portName: dashboard
     # -- Service port
-    port: 80
+    port: 3100
     # -- Service target port
-    targetPort: 80
+    targetPort: 3100
     # -- (int) Service nodePort
     nodePort:
   serviceAccount:

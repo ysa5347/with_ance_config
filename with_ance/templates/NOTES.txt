@@ -20,5 +20,3 @@
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:$CONTAINER_PORT
 {{- end }}
-
-aws ecr get-login-password --region ap-northeast-2 --profile ecr-readonly | docker login --username server --password-stdin 456974328065.dkr.ecr.ap-northeast-2.amazonaws.com

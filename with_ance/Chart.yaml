@@ -1,6 +1,6 @@
 apiVersion: v2
-name: with_ance
-description: A Helm chart for with_ance
+name: with-ance
+description: A Helm chart for with-ance
 
 # A chart can be either an 'application' or a 'library' chart.
 #

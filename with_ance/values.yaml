@@ -53,9 +53,9 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-  #  - secretName: chart-example-tls
+  #  - secretName: ysa5347-httpstls
   #    hosts:
-  #      - chart-example.local
+  #      - ysa5347.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

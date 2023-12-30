@@ -16,7 +16,6 @@ metadata:
     argocd.argoproj.io/instance: argo-workflow
     helm.sh/chart: argo-workflows-0.39.3
   name: argo-workflow-argo-workflows-admin
-  resourceVersion: '4950990'
   uid: 35866a69-61a1-4f51-b23a-8ac646dc9e16
 roleRef:
   apiGroup: rbac.authorization.k8s.io

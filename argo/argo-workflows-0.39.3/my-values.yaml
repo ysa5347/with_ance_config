@@ -596,8 +596,10 @@ server:
       - path: /api/webhooks/*
         pathType: Prefix
         backend:
-          serviceName: github-webhook-es-eventsource-svc
-          servicePort: 80
+          service:
+            name: github-webhook-es-eventsource-svc
+            port:
+              name: 80
       ## for Kubernetes >=1.19 (when "networking.k8s.io/v1" is used)
       # - path: /*
       #   pathType: Prefix

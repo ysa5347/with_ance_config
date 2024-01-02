@@ -80,7 +80,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: argo-workflow.ysa5347.com
+  - host: argo-events.ysa5347.com
     http:
       paths:
       - pathType: ImplementationSpecific

@@ -592,14 +592,14 @@ server:
     # -- Ingress path type. One of `Exact`, `Prefix` or `ImplementationSpecific`
     pathType: Prefix
     # -- Additional ingress paths
-    extraPaths:
-      - path: /api/webhooks/*
-        pathType: Prefix
-        backend:
-          service:
-            name: github-webhook-es-eventsource-svc
-            port:
-              number: 80
+    # extraPaths:
+    #   - path: /api/webhooks/*
+    #     pathType: Prefix
+    #     backend:
+    #       service:
+    #         name: github-webhook-es-eventsource-svc
+    #         port:
+    #           number: 80
       ## for Kubernetes >=1.19 (when "networking.k8s.io/v1" is used)
       # - path: /*
       #   pathType: Prefix

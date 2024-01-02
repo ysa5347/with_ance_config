@@ -1,0 +1,96 @@
+# Info on GitHub Webhook: https://developer.github.com/v3/repos/hooks/#create-a-hook
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: github-webhook-es
+spec:
+  github:
+    with-ance:
+      repositories:
+        - owner: ysa5347
+          names:
+            - with_ance_app       
+      # Github will send events to following port and endpoint
+      webhook:
+        # endpoint to listen to events on
+        endpoint: /api/webhooks/with-ance
+        # port to run internal HTTP server on
+        port: "12000"
+        # HTTP request method to allow. In this case, only POST requests are accepted
+        method: POST
+        # url the event-source will use to register at Github.
+        # This url must be reachable from outside the cluster.
+        # The name for the service is in `<event-source-name>-eventsource-svc` format.
+        # You will need to create an Ingress or Openshift Route for the event-source service so that it can be reached from GitHub.
+        url: http://argo-workflow.ysa5347.com
+      # type of events to listen to.
+      # following listens to everything, hence *
+      # You can find more info on https://developer.github.com/v3/activity/events/types/
+      events:
+        - "*"
+
+      # apiToken refers to K8s secret that stores the github api token
+      # if apiToken is provided controller will create webhook on GitHub repo
+      # +optional
+      apiToken:
+        # Name of the K8s secret that contains the access token
+        name: github-access
+        # Key within the K8s secret whose corresponding value (must be base64 encoded) is access token
+        key: token
+
+      # webhookSecret refers to K8s secret that stores the github hook secret
+      # +optional
+      webhookSecret:
+        # Name of the K8s secret that contains the hook secret
+        name: github-access
+        # Key within the K8s secret whose corresponding value (must be base64 encoded) is hook secret
+        key: secret
+
+      # type of the connection between event-source and Github.
+      # You should set it to false to avoid man-in-the-middle and other attacks.
+      insecure: true
+      # Determines if notifications are sent when the webhook is triggered
+      active: true
+      # The media type used to serialize the payloads
+      contentType: json
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: github-webhook-es-eventsource-svc
+  namespace: argo
+spec:
+  selector:
+    eventsource-name: github-webhook-es
+  ports:
+  - port: 12000
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: github-webhook-es-ingress
+  namespace: argo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: argo-workflow.ysa5347.com
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        path: /api/webhooks/with-ance
+        backend:
+            service:
+              name: github-webhook-es-eventsource-svc
+              port: 
+                number: 80
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.111.194.44

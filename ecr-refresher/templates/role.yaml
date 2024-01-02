@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "ecr-refresher.roleName" . }}
+  namespace: {{ .Release.Namespace }}
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: [{{ join ", " .Values.targetSecretNames }}]
+  verbs: ["get", "watch", "list", "patch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  resourceNames: [{{ join ", " .Values.targetDeploymentNames }}]
+  verbs: ["patch"]

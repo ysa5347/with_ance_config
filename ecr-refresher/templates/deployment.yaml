@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ecr-refresher.deploymentName" . }}
+  labels:
+    app: {{ include "ecr-refresher.deploymentName" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "ecr-refresher.deploymentName" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ecr-refresher.deploymentName" . }} 
+    spec:
+      containers:
+        - name: {{ include "ecr-refresher.deploymentName" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          workingDir: /run-script
+          command:
+            - "sleep"
+          args:
+            - "1000000000000000000"
+          env:
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ecr-refresher.secretName" . }}
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "ecr-refresher.secretName" . }}
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: TARGET_SECRET_NAMES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ecr-refresher.configMapName" . }}
+                  key: TARGET_SECRET_NAMES
+            - name: TARGET_DEPLOYMENT_NAMES
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "ecr-refresher.configMapName" . }}
+                  key: TARGET_DEPLOYMENT_NAMES
+          volumeMounts:
+            - name: run-script
+              mountPath: /run-script/run.sh
+              subPath: run.sh
+      volumes:
+        - name: run-script
+          configMap:
+            name: {{ include "ecr-refresher.configMapName" . }}
+            items:
+              - key: run.sh
+                path: run.sh
+            defaultMode: 0755
+      serviceAccountName: {{ include "ecr-refresher.serviceAccountName" . }}

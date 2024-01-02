@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ecr-refresher.configMapName" . }}
+data:
+  TARGET_SECRET_NAMES: {{ join " " .Values.targetSecretNames }}
+  TARGET_DEPLOYMENT_NAMES: {{ join " " .Values.targetDeploymentNames }}
+binaryData:
+  run.sh: {{ (.Files.Get "run.sh" | b64enc) }}

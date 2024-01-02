@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "ecr-refresher.cronJobName" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "{{ .Values.cronJob.period }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: {{ include "ecr-refresher.cronJobName" . }}
+              image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+              command:
+                - "/bin/sh"
+              args:
+                - "-c"
+                - "/run-script/run.sh -s $TARGET_SECRET_NAMES -d $TARGET_DEPLOYMENT_NAMES"
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "ecr-refresher.secretName" . }}
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "ecr-refresher.secretName" . }}
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: TARGET_SECRET_NAMES
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "ecr-refresher.configMapName" . }}
+                      key: TARGET_SECRET_NAMES
+                - name: TARGET_DEPLOYMENT_NAMES
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "ecr-refresher.configMapName" . }}
+                      key: TARGET_DEPLOYMENT_NAMES
+              volumeMounts:
+              - name: run-script
+                mountPath: /run-script/run.sh
+                subPath: run.sh
+          volumes:
+            - name: run-script
+              configMap:
+                name: {{ include "ecr-refresher.configMapName" . }}
+                items:
+                  - key: run.sh
+                    path: run.sh
+                defaultMode: 0755
+          restartPolicy: OnFailure  # or Never, OnFailure
+          serviceAccountName: {{ include "ecr-refresher.serviceAccountName" . }}

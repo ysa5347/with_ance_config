@@ -1,0 +1,37 @@
+name: ecr-secrets
+# cronjob's image
+image:
+  repository: amazon/aws-cli
+  tag: 2.7.6
+  pullPolicy: Always
+  pullSecrets: []
+
+# cronjob's rule
+cronJob:
+  failedJobsHistoryLimit: 3
+  successfullJobsHistroyLimit: 4
+  period: "30 7-21/4 * * *"
+  suspend: false
+
+# ecr
+ecrRegistry:
+  registry: 456974328065.dkr.ecr.ap-northeast-2.amazonaws.com
+  awsDefaultRegion: ap-northeast-2
+  awsAccessKeyID: "-"
+  awsSecretAccessKey: "-"
+
+# to update role's permission refered to as resourceName and patch secrets with these names and restart deployment
+targetSecretNames:
+  - ecr-secrets
+
+targetDeploymentNames:
+  - with-ance
+
+# etc
+resources:
+  limits:
+    cpu: 50m
+    memory: 16Mi
+  requests:
+    cpu: 100m
+    memory: 32Mi

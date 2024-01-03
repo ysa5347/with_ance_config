@@ -1,41 +1,45 @@
+{{ range $index, $tag := .Values.images.tags }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "with_ance.fullname" . }}
+  name: {{ include "with_ance.fullname" $ }}-{{ .name }}
   labels:
-    {{- include "with_ance.labels" . | nindent 4 }}
+    {{- include "with_ance.labels" $ | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  {{- if not $.Values.autoscaling.enabled }}
+  replicas: {{ $.Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "with_ance.selectorLabels" . | nindent 6 }}
+      {{- include "with_ance.selectorLabels" $ | nindent 6 }}-{{ .name }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with $.Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "with_ance.selectorLabels" . | nindent 8 }}
+        {{- include "with_ance.selectorLabels" $ | nindent 8 }}-{{ .name }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- with $.Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "with_ance.serviceAccountName" . }}
+      serviceAccountName: {{ include "with_ance.serviceAccountName" $ }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ $.Chart.Name }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          image: "{{ $.Values.images.repository }}:{{ .tag }}"
+          imagePullPolicy: {{ $.Values.images.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              {{ with index $.Values.services $index }}
+              containerPort: {{ .port }}
+              {{ end }}
               protocol: TCP
           livenessProbe:
             failureThreshold: 6
@@ -43,7 +47,7 @@ spec:
               path: /
               port: http
               scheme: HTTP
-            periodSeconds: 10
+            periodSeconds: 15
             successThreshold: 1
             timeoutSeconds: 1
           readinessProbe:
@@ -51,16 +55,17 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
+            {{- toYaml $.Values.resources | nindent 12 }}
+      {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with $.Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with $.Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+{{- end }}

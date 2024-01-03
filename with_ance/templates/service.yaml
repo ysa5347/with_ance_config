@@ -1,15 +1,22 @@
+{{ range $index, $tag := .Values.images.tags }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "with_ance.fullname" . }}
+  name: {{ include "with_ance.fullname" $ }}-{{ .name }}
   labels:
-    {{- include "with_ance.labels" . | nindent 4 }}
+    {{- include "with_ance.labels" $ | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  {{ with index $.Values.services $index }}
+  type: {{ .type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .port }}
       targetPort: http
       protocol: TCP
       name: http
+  {{ end }}
   selector:
-    {{- include "with_ance.selectorLabels" . | nindent 4 }}
+    {{- include "with_ance.selectorLabels" $ | nindent 4 }}-{{ .name }}
+{{ end }}
+
+

@@ -4,11 +4,16 @@
 
 replicaCount: 1
 
-image:
+images:
   repository: 456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tags:
+    - name: main
+      tag: ""
+    - name: stage
+      tag: ""
+    # - name: dev
 
 imagePullSecrets: 
   - name: ecr-secrets
@@ -37,9 +42,16 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  type: ClusterIP
-  port: 80
+services:
+  - name: main
+    type: ClusterIP
+    port: 80
+  
+  - name: stage
+    type: ClusterIP
+    port: 8000
+
+  # - name: dev
 
 ingress:
   enabled: true
@@ -51,11 +63,11 @@ ingress:
     - host: ysa5347.com
       paths:
         - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: ysa5347-httpstls
-  #    hosts:
-  #      - ysa5347.com
+          pathType: Prefix
+  tls:
+    - secretName: ysa5347-httpstls
+      hosts:
+        - ysa5347.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

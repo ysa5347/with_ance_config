@@ -10,7 +10,7 @@ image:
 cronJob:
   failedJobsHistoryLimit: 3
   successfullJobsHistroyLimit: 4
-  period: "30 7-21/4 * * *"
+  period: "0 */4 * * *"
   suspend: false
 
 # ecr
@@ -26,6 +26,9 @@ targetSecretNames:
 
 targetDeploymentNames:
   - with-ance
+  - with-ance-main
+  - with-ance-stage
+  - with-ance-dev
 
 # etc
 resources:

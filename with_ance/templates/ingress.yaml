@@ -9,8 +9,8 @@
 {{- end }}
 
 {{- $subdomain := printf "%s." .name -}}
-{{- if contains "main" $subdomain }}
-{{- $subdomain := "" -}}
+{{- if eq .name "main" }}
+{{- $subdomain = "" -}}
 {{- end }}
 ---
 {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion -}}

@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- $subdomain := printf "%s." .name -}}
-{{- if eq $index 0 }}
+{{- if contains "main" $subdomain }}
 {{- $subdomain := "" -}}
 {{- end }}
 ---

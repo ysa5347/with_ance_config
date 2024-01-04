@@ -37,9 +37,7 @@ spec:
           imagePullPolicy: {{ $.Values.images.pullPolicy }}
           ports:
             - name: http
-              {{ with index $.Values.services $index }}
-              containerPort: {{ .port }}
-              {{ end }}
+              containerPort: {{ $Values.service.port }}
               protocol: TCP
           livenessProbe:
             failureThreshold: 6

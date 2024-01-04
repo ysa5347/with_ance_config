@@ -13,7 +13,7 @@ images:
       tag: ""
     - name: stage
       tag: ""
-    # - name: dev
+    # - name: dev/~~
 
 imagePullSecrets: 
   - name: ecr-secrets
@@ -42,16 +42,10 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-services:
-  - name: main
-    type: ClusterIP
-    port: 80
-  
-  - name: stage
-    type: ClusterIP
-    port: 8000
-
-  # - name: dev
+service:
+  name: main
+  type: ClusterIP
+  port: 80
 
 ingress:
   enabled: true
@@ -59,11 +53,11 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: ysa5347.com
-      paths:
-        - path: /
-          pathType: Prefix
+  host: ysa5347.com
+  paths:
+    - path: /
+      pathType: Prefix
+    
   # tls:
   #   - secretName: ysa5347-httpstls
   #     hosts:

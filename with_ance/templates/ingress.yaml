@@ -1,5 +1,12 @@
 {{- if .Values.ingress.enabled -}}
 {{- range $index, $tag := .Values.images.tags }}
+{{- $servicename := .name}}
+{{- if .name=="main" }}
+{{- $subdomain := "" }}
+{{- else }}
+{{- $subdomain := printf "%s-" .name }}
+{{- end }}
+{{- $subdomain := include "with_ance.subdomain" $ -}}
 {{- $fullName := include "with_ance.fullname" $ -}}
 {{- if and $.Values.ingress.className (not (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey $.Values.ingress.annotations "kubernetes.io/ingress.class") }}
@@ -38,8 +45,8 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range $.Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    {{- with $.Values.ingress }}
+    - host: {{ printf "%s%s" $subdomain .host }}
       http:
         paths:
           {{- range .paths }}
@@ -48,16 +55,14 @@ spec:
             pathType: {{ .pathType }}
             {{- end }}
             backend:
-              {{- with index $.Values.services $index }}
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ include "with_ance.fullname" $ }}-{{ .name }}
+                name: {{ include "with_ance.fullname" $ }}-{{ $servicename }}
                 port:
-                  number: {{ .port }}
+                  number: {{ $.Values.service.port }}
               {{- else }}
-              serviceName: {{ include "with_ance.fullname" $ }}-{{ .name }}
-              servicePort: {{ .port }}
-              {{- end }}
+              serviceName: {{ include "with_ance.fullname" $ }}-{{ $servicename }}
+              servicePort: {{ $.Values.service.port }}
               {{- end }}
           {{- end }}
     {{- end }}

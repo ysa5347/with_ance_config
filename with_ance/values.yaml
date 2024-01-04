@@ -43,7 +43,6 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  name: main
   type: ClusterIP
   port: 80
 

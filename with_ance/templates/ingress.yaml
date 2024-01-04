@@ -8,8 +8,8 @@
   {{- end }}
 {{- end }}
 
-{{- $subdomain := printf "%s-" .name -}}
-{{- if eq .name "main" }}
+{{- $subdomain := printf "%s." .name -}}
+{{- if eq quote(.name) "main" }}
 {{- $subdomain := "" -}}
 {{- end }}
 ---

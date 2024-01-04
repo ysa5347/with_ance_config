@@ -1,17 +1,16 @@
 {{- if .Values.ingress.enabled -}}
 {{- range $index, $tag := .Values.images.tags }}
 {{- $servicename := .name}}
-{{- if .name=="main" }}
-{{- $subdomain := "" }}
-{{- else }}
-{{- $subdomain := printf "%s-" .name }}
-{{- end }}
-{{- $subdomain := include "with_ance.subdomain" $ -}}
 {{- $fullName := include "with_ance.fullname" $ -}}
 {{- if and $.Values.ingress.className (not (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey $.Values.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set $.Values.ingress.annotations "kubernetes.io/ingress.class" $.Values.ingress.className}}
   {{- end }}
+{{- end }}
+
+{{- $subdomain := ""}}
+{{- if ne .name "main" }}
+{{- $subdomain := printf "%s-" .name -}}
 {{- end }}
 ---
 {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion -}}
@@ -23,7 +22,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}-{{ .name }}
+  name: {{ $fullName }}-{{ $servicename }}
   labels:
     {{- include "with_ance.labels" $ | nindent 4 }}
   {{- with $.Values.ingress.annotations }}

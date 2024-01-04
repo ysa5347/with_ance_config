@@ -13,7 +13,6 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-  {{ end }}
   selector:
     {{- include "with_ance.selectorLabels" $ | nindent 4 }}-{{ .name }}
 {{ end }}

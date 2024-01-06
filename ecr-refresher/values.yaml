@@ -25,9 +25,9 @@ targetSecretNames:
   - ecr-secrets
 
 targetDeploymentNames:
-  with-ance-main
-  with-ance-stage
-  with-ance-dev
+  - with-ance-main
+  - with-ance-stage
+  - with-ance-dev
 
 # etc
 resources:

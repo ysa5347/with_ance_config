@@ -9,7 +9,7 @@ images:
   # Overrides the image tag whose default is the chart appVersion.
   tags:
     - name: main
-      tag: ""
+      tag: "/with_ance:main-"
     - name: stage
       tag: ""
       # - name: dev/~~

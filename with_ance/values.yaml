@@ -11,7 +11,7 @@ images:
     - name: main
       tag: "456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance:main-95d299c"
     - name: stage
-      tag: "stage-49fd1cc"
+      tag: "stage-8dda551"
       # - name: dev/~~
 imagePullSecrets:
   - name: ecr-secrets

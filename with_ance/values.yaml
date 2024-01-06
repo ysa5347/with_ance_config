@@ -9,7 +9,7 @@ images:
   # Overrides the image tag whose default is the chart appVersion.
   tags:
     - name: main
-      tag: "456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance:main-a324149"
+      tag: "456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance:main-95d299c"
     - name: stage
       tag: ""
       # - name: dev/~~

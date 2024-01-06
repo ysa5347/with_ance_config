@@ -9,10 +9,10 @@ images:
   # Overrides the image tag whose default is the chart appVersion.
   tags:
     - name: main
-      tag: "/$ECR_REPOSITORY:-"
+      tag: "/$ECR_REPOSITORY:main-$SHA"
     - name: stage
       tag: ""
-  # - name: dev/~~
+      # - name: dev/~~
 imagePullSecrets:
   - name: ecr-secrets
 nameOverride: ""

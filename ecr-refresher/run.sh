@@ -7,11 +7,11 @@ while getopts "s:d:" option;
 do
   case $option in
     s)
-        TARGET_SECRET_NAMES[*]+=($OPTARG)
+        TARGET_SECRET_NAMES[]+=($OPTARG)
         ;;
 
     d)
-        TARGET_DEPLOYMENT_NAMES[*]+=($OPTARG)
+        TARGET_DEPLOYMENT_NAMES[]+=($OPTARG)
         ;;
   esac
 done

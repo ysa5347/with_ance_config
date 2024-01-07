@@ -5,7 +5,7 @@
 replicaCount: 1
 images:
   repository: 456974328065.dkr.ecr.ap-northeast-2.amazonaws.com/with_ance
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tags:
     - name: main

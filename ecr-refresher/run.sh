@@ -33,13 +33,13 @@ echo "[$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PRINT_VAR][ECR_PUSH_TOKEN] $ECR_PUSH_
 for TARGET_SECRET_NAME in "${TARGET_SECRET_NAMES[@]}"
 do
     echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PATCH_SECRET][START] $TARGET_SECRET_NAME
-    echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PRINT_VAR][ECR_PUSH_TOKEN] $ECR_PUSH_TOKEN
+    echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PRINT_VAR][ECR_PUSH_TOKEN] $ECR_PUSH_TOKEN | base64 | tr -d '[:space:]'
     curl -v \
       --cacert $CA_CERTIFICATE \
       -H "Authorization: Bearer $BEARER_TOKEN" \
       -H "Content-Type: application/json-patch+json" \
       -X PATCH \
-      -d '[{"op": "replace", "path": "/data/DOCKER_REGISTRY_PASSWORD", "value": "'"$(echo -n $ECR_PUSH_TOKEN | base64)"'"}]' \
+      -d '[{"op": "replace", "path": "/data/DOCKER_REGISTRY_PASSWORD", "value": "'"$(echo -n $ECR_PUSH_TOKEN | base64 | tr -d '[:space:]')"'"}]' \
       https://kubernetes.default.svc/api/v1/namespaces/$NAMESPACE/secrets/$TARGET_SECRET_NAME
       
     echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PATCH_SECRET][END] $TARGET_SECRET_NAME

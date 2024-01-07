@@ -33,7 +33,7 @@ echo "[$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PRINT_VAR][ECR_PUSH_TOKEN] $ECR_PUSH_
 for TARGET_SECRET_NAME in "${TARGET_SECRET_NAMES[@]}"
 do
     echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PATCH_SECRET][START] $TARGET_SECRET_NAME
-    echo [$(date +%Y-%m-%dT%H:%M:%S%z)][INFO][PRINT_VAR][ECR_PUSH_TOKEN] $ECR_PUSH_TOKEN | base64 | tr -d '[:space:]'
+    echo -n $ECR_PUSH_TOKEN | base64 | tr -d '[:space:]'
     curl -v \
       --cacert $CA_CERTIFICATE \
       -H "Authorization: Bearer $BEARER_TOKEN" \

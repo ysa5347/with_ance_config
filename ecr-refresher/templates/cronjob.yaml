@@ -16,7 +16,6 @@ spec:
                 - "/bin/sh"
               args:
                 - "-c"
-                - "echo $TARGET_DEPLOYMENT_NAMES"
                 - "/run-script/run.sh -s $TARGET_SECRET_NAMES -d $TARGET_DEPLOYMENT_NAMES"
               env:
                 - name: AWS_ACCESS_KEY_ID

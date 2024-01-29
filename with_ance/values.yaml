@@ -11,7 +11,7 @@ images:
     - name: main
       tag: "main-6e083ed"
     - name: stage
-      tag: "stage-ea4614f"
+      tag: "stage-c4e770a"
       # - name: dev/~~
 imagePullSecrets:
   - name: ecr-secrets
